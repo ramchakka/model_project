@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="container">
+    <h1>Create Model</h1>
+</header>
+    <section class="container">
+        <form action="{{ url_for('webmodels.create_model') }}" enctype="multipart/form-data" method="post">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="file1">File</label>
+                    <input type="file" name="file1" id="file1" autocomplete="off" required >
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </section>
+
+{% endblock %}

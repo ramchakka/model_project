@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <form action="{{ url_for('webuser.register_user') }}" method="post">
+
+        <div class="form-group">
+            <label class ="required" for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username" maxlength="20" aria-describedby="userHelpBlock" required></input>
+            <span id="userHelpBlock" class="help-block">
+                Be sure to enter  username without special characters.
+            </span>
+        </div>
+        <div class="form-group">
+            <label class ="required" for="password">Password</label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required></input>
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" aria-describedby="emailHelpBlock"></input>
+            <span id="emailHelpBlock" class="help-block">
+                Be sure to enter a valid e-mail, as that's where we'll send alerts.
+            </span>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign up</button>
+    </form>
+</div>
+{% endblock %}
