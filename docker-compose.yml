@@ -1,9 +1,9 @@
 version: '3.1'
 services:
   web:
-    build: ./store
-    image: storeapp_image
-    container_name: storeapp
+    build: ./modelapp
+    image: modelapp_image
+    container_name: modelapp
     volumes:
       - "./model_images:/home/appuser/app/static/images"
       - "./local-db:/home/appuser/app/local-db"
