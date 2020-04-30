@@ -77,8 +77,8 @@ app.register_blueprint(webmodel_blueprint, url_prefix="/web/models")
 
 api.add_resource(Design, "/model/<string:name>")
 api.add_resource(DesignList, "/models")
-api.add_resource(Getfile, "/model/<string:id>")
-api.add_resource(GetEncodedFile, "/encmodel/<string:id>")
+api.add_resource(Getfile, "/modelfile/<string:id>")
+api.add_resource(GetEncodedFile, "/encmodelfile/<string:id>")
 
 api.add_resource(UserLogin, "/login")
 api.add_resource(TokenRefresh, "/refresh")

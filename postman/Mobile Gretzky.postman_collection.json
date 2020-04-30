@@ -189,7 +189,7 @@
 					"response": []
 				},
 				{
-					"name": "get encmodel/id",
+					"name": "get encmodelfile/id",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -205,12 +205,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/encmodel/2?key=1234567890123456",
+							"raw": "{{url}}/encmodelfile/2?key=1234567890123456",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"encmodel",
+								"encmodelfile",
 								"2"
 							],
 							"query": [
@@ -225,7 +225,7 @@
 					"response": []
 				},
 				{
-					"name": "get model/id",
+					"name": "get modelfile/id",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -241,12 +241,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/model/1",
+							"raw": "{{url}}/modelfile/1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"model",
+								"modelfile",
 								"1"
 							]
 						}

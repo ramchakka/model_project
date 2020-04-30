@@ -17,7 +17,7 @@ class Getfile(Resource):
     @classmethod
     @jwt_required
     def get(cls, id: str):
-        logger.debug(request)
+        #logger.debug(request)
         design = DesignModel.find_by_id(id)
         if design:
             try:
