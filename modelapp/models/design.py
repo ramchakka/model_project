@@ -9,7 +9,7 @@ class DesignModel(db.Model):
     __tablename__ = "models"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(512), nullable=False, unique=True)
+    name = db.Column(db.String(512), nullable=False, unique=False)
     objname = db.Column(db.String(2048), nullable=False, unique=False,default=None)
 
     username = db.Column(db.String, db.ForeignKey("users.username"), nullable=True)
@@ -25,6 +25,11 @@ class DesignModel(db.Model):
     @classmethod
     def find_by_username(cls, username: str) -> "DesignModel":
         return cls.query.filter_by(username=username)
+    
+    @classmethod
+    def find_by_designname_and_username(cls, dname: str, uname: str) -> "DesignModel":
+        return cls.query.filter_by(name=dname,username=uname).first()
+
 
     @classmethod
     def find_by_id(cls, id: int) -> "DesignModel":

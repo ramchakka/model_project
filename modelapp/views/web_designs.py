@@ -28,7 +28,7 @@ def create_model():
 
         file1 = request.files['file1']
         name = file1.filename
-        if DesignModel.find_by_name(name):
+        if DesignModel.find_by_designname_and_username(name,session['username']):
             return "Model already exists with name. Try another name"
 
         try:
@@ -46,6 +46,7 @@ def create_model():
         try:
             design.save_to_db()
         except:
+            traceback.print_exc()
             return "Error creating model"
 
         return redirect(url_for(".index"))
@@ -70,6 +71,7 @@ def edit_model(model_id):
             model.save_to_db()
         
         except:
+            traceback.print_exc()
             flash('Error renaming model', 'danger')
             #return "Error renaming model"
 
