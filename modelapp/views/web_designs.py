@@ -82,14 +82,16 @@ def edit_model(model_id):
 @requires_login
 def delete_model(model_id):
     model = DesignModel.find_by_id(model_id)
-    if model.username == session["username"]:
+    if model and model.username == session["username"]:
         model.delete_from_db()
-    try:
-        uploads = os.path.join( current_app.config['UPLOADED_FILES_DEST'])
-        os.remove(os.path.join(uploads,model.objname))
-    except:
-        traceback.print_exc()
-        return "File deletion failed"
+        try:
+            uploads = os.path.join( current_app.config['UPLOADED_FILES_DEST'])
+            os.remove(os.path.join(uploads,model.objname))
+        except:
+            traceback.print_exc()
+            flash('File deletion failed','danger')
+    else:
+        flash('Unauthorized: Unable to delete model id {}'.format(model_id), 'danger')
 
     return redirect(url_for(".index"))
 
@@ -99,11 +101,14 @@ def delete_model(model_id):
 def download_file(model_id):
 
     model = DesignModel.find_by_id(model_id)
-    try:
-        uploads = os.path.join( current_app.config['UPLOADED_FILES_DEST'], os.path.dirname(model.objname))
-        return send_from_directory(directory=uploads, filename=os.path.basename(model.objname),attachment_filename=model.name,as_attachment=True)
-    except:
-        traceback.print_exc()
-        return "File not found!"
+    if model and model.username == session["username"]:
+        try:
+            uploads = os.path.join( current_app.config['UPLOADED_FILES_DEST'], os.path.dirname(model.objname))
+            return send_from_directory(directory=uploads, filename=os.path.basename(model.objname),attachment_filename=model.name,as_attachment=True)
+        except:
+            traceback.print_exc()
+            return "File not found!"
+    else:
+        flash('Unauthorized: Unable to download model id {}'.format(model_id), 'danger')
 
-    return redirect(url_for(".index",model_id=model_id))
+        return redirect(url_for(".index",model_id=model_id))

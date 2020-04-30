@@ -189,6 +189,42 @@
 					"response": []
 				},
 				{
+					"name": "get encmodel/id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/encmodel/2?key=1234567890123456",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"encmodel",
+								"2"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "1234567890123456"
+								}
+							]
+						},
+						"description": "AES (CBC mode)\nkey=16 chars ( default='1111111111111111')"
+					},
+					"response": []
+				},
+				{
 					"name": "get model/id",
 					"request": {
 						"method": "GET",

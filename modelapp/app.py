@@ -20,6 +20,7 @@ from views.web_designs import webmodel_blueprint
 
 from resources.design import Design, DesignList
 from resources.getfile import Getfile
+from resources.getencfile import GetEncodedFile
 from libs.image_helper import FILES_SET
 import datetime
 import calendar
@@ -67,7 +68,7 @@ def _jinja2_filter_datetime(date, fmt=None):
     date = datetime.datetime.fromtimestamp(calendar.timegm(utc_dt.timetuple()))
     
     native = date.replace(tzinfo=None)
-    format='%b %d, %Y %I:%M %p'
+    format='%b %d, %Y %I:%M %p %Z'
     return native.strftime(format) 
 
 
@@ -77,6 +78,7 @@ app.register_blueprint(webmodel_blueprint, url_prefix="/web/models")
 api.add_resource(Design, "/model/<string:name>")
 api.add_resource(DesignList, "/models")
 api.add_resource(Getfile, "/model/<string:id>")
+api.add_resource(GetEncodedFile, "/encmodel/<string:id>")
 
 api.add_resource(UserLogin, "/login")
 api.add_resource(TokenRefresh, "/refresh")
