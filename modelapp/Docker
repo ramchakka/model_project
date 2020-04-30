@@ -1,0 +1,20 @@
+FROM python:3.7
+
+#RUN mkdir -p /home/appuser/app
+WORKDIR /home/appuser/app
+
+# Expose the port uWSGI will listen on
+#EXPOSE 5000
+
+# Copy the requirements file in order to install
+# Python dependencies
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install -r requirements.txt
+
+# Copy the rest of the codebase into the image
+COPY . /home/appuser/app
+
+# run the command to start uWSGI
+CMD [ "uwsgi", "--ini", "app.ini" ]
