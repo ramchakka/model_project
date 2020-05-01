@@ -2,7 +2,7 @@ from flask import Blueprint, request, session, url_for, render_template, redirec
 #from resources.user import  User, UserModel
 #from schemas.user import UserSchema
 from schemas.design import DesignSchema
-from models import requires_login, DesignModel
+from models import requires_login, requires_admin, DesignModel
 from werkzeug.security import safe_str_cmp
 from flask_uploads import UploadNotAllowed
 from libs import image_helper
@@ -84,7 +84,7 @@ def edit_model(model_id):
 @requires_login
 def delete_model(model_id):
     model = DesignModel.find_by_id(model_id)
-    if model and model.username == session["username"]:
+    if model and (model.username == session["username"] or session["admin"] == True):
         model.delete_from_db()
         try:
             uploads = os.path.join( current_app.config['UPLOADED_FILES_DEST'])
@@ -103,7 +103,7 @@ def delete_model(model_id):
 def download_file(model_id):
 
     model = DesignModel.find_by_id(model_id)
-    if model and model.username == session["username"]:
+    if model and (model.username == session["username"] or  session["admin"] == True):
         try:
             uploads = os.path.join( current_app.config['UPLOADED_FILES_DEST'], os.path.dirname(model.objname))
             return send_from_directory(directory=uploads, filename=os.path.basename(model.objname),attachment_filename=model.name,as_attachment=True)
@@ -114,3 +114,10 @@ def download_file(model_id):
         flash('Unauthorized: Unable to download model id {}'.format(model_id), 'danger')
 
         return redirect(url_for(".index",model_id=model_id))
+
+@webmodel_blueprint.route("/all")
+@requires_login
+@requires_admin
+def indexall():
+    models = DesignModel.find_all()
+    return render_template("models/indexall.html", models=design_list_schema.dump(models))

@@ -30,7 +30,8 @@ app = Flask(__name__)
 load_dotenv(".env", verbose=True)
 app.config.from_object("default_config")  # load default configs from default_config.py
 app.config.from_envvar(
-    "APPLICATION_SETTINGS"
+    "APPLICATION_SETTINGS",
+    "ADMIN"
 )  # override with config.py (APPLICATION_SETTINGS points to config.py)
 logging.config.fileConfig(os.path.join(app.root_path,app.config["LOG_CONFIG_FILE"]))
 logger = logging.getLogger()
