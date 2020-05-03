@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+werkzeug = "==0.16.1"
 flask = "*"
 flask-sqlalchemy = "*"
 flask-restful = "*"
@@ -12,7 +13,8 @@ marshmallow = "*"
 flask-marshmallow = "==0.11.0"
 flask-migrate = "*"
 marshmallow-sqlalchemy = "*"
-uWSGI = "*"
+#uWSGI = "*"
+gunicorn = "*"
 python-dotenv = "*"
 Jinja2 = "*"
 passlib = "*"
@@ -20,6 +22,7 @@ pycrypto = "*"
 #edlib = "*"
 #flask-uploads = "*"
 flask-uploads = {git = "https://github.com/maxcountryman/flask-uploads.git",ref = "master"}
+
 
 [dev-packages]
 pylint = "*"

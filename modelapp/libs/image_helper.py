@@ -3,9 +3,9 @@ import re
 from typing import Union
 from werkzeug.datastructures import FileStorage
 import traceback
-from flask_uploads import UploadSet, TEXT, DOCUMENTS, IMAGES, AUDIO, DATA, SCRIPTS, ARCHIVES, SOURCE, EXECUTABLES
+from flask_uploads import UploadSet, TEXT, DOCUMENTS, IMAGES, AUDIO, DATA, SCRIPTS, ARCHIVES, EXECUTABLES
 
-ALL_EXT = TEXT + DOCUMENTS + IMAGES + AUDIO + DATA + SCRIPTS + ARCHIVES + SOURCE + EXECUTABLES
+ALL_EXT = TEXT + DOCUMENTS + IMAGES + AUDIO + DATA + SCRIPTS + ARCHIVES  + EXECUTABLES
 FILES_SET = UploadSet("files", ALL_EXT)  # set name and allowed extensions
 
 
