@@ -17,15 +17,10 @@
                         <dd>
                             <small id="fileHelp" class="form-text text-muted">User: {{ model.username }}, Date/Time: {{ model.time_created |strftime }}</small>
                         </dd>
-                        <a class="btn btn-danger btn-sm mt-0" href="{{ url_for('webmodels.delete_model', model_id=model.id) }}">
+                        <a class="btn btn-danger btn-sm mt-0" href="{{ url_for('webmodels_all.delete_model', model_id=model.id) }}">
                             Permanently Delete Model
                         </a>
                     </dl>
-                <!--
-                <a class="btn btn-secondary" href="{{ url_for('webmodels.edit_model', model_id=model.id) }}">
-                    Rename Model
-                </a>
-                -->
 
             </div>
             {% endfor %}

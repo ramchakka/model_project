@@ -17,6 +17,7 @@ from blacklist import BLACKLIST
 from resources.user import UserRegister, UserLogin, User, TokenRefresh, UserLogout
 from views.web_user import webuser_blueprint
 from views.web_designs import webmodel_blueprint
+from views.web_designs_all import webmodel_all_blueprint
 
 from resources.design import Design, DesignList
 from resources.getfile import Getfile
@@ -75,6 +76,7 @@ def _jinja2_filter_datetime(date, fmt=None):
 
 app.register_blueprint(webuser_blueprint, url_prefix="/web/user")
 app.register_blueprint(webmodel_blueprint, url_prefix="/web/models")
+app.register_blueprint(webmodel_all_blueprint, url_prefix="/web/allmodels")
 
 api.add_resource(Design, "/model/<string:name>")
 api.add_resource(DesignList, "/models")

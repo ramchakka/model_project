@@ -22,6 +22,8 @@ pycrypto = "*"
 #edlib = "*"
 #flask-uploads = "*"
 flask-uploads = {git = "https://github.com/maxcountryman/flask-uploads.git",ref = "master"}
+flask-testing = "*"
+coverage = "*"
 
 
 [dev-packages]

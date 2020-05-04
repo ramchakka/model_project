@@ -84,7 +84,7 @@ def edit_model(model_id):
 @requires_login
 def delete_model(model_id):
     model = DesignModel.find_by_id(model_id)
-    if model and (model.username == session["username"] or session["admin"] == True):
+    if model and model.username == session["username"]:
         model.delete_from_db()
         try:
             uploads = os.path.join( current_app.config['UPLOADED_FILES_DEST'])
@@ -114,10 +114,3 @@ def download_file(model_id):
         flash('Unauthorized: Unable to download model id {}'.format(model_id), 'danger')
 
         return redirect(url_for(".index",model_id=model_id))
-
-@webmodel_blueprint.route("/all")
-@requires_login
-@requires_admin
-def indexall():
-    models = DesignModel.find_all()
-    return render_template("models/indexall.html", models=design_list_schema.dump(models))
