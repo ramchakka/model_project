@@ -30,7 +30,9 @@ class GetEncodedFile(Resource):
         design = DesignModel.find_by_id(id)
         if design:
             try:
-                
+                if not os.path.isfile(os.path.join( current_app.config['UPLOADED_FILES_DEST'],design.objname)):
+                    return {"message": gettext("getfile_file_notfound")}, 404
+
                 uploads = os.path.join( current_app.config['UPLOADED_FILES_DEST'])
                 _, temp_path = mkstemp()
                 out_filename=encrypt_file(key,os.path.join(uploads,design.objname),out_filename=temp_path)

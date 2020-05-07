@@ -21,6 +21,9 @@ class Getfile(Resource):
         design = DesignModel.find_by_id(id)
         if design:
             try:
+                if not os.path.isfile(os.path.join( current_app.config['UPLOADED_FILES_DEST'],design.objname)):
+                    return {"message": gettext("getfile_file_notfound")}, 404
+
                 uploads = os.path.join( current_app.config['UPLOADED_FILES_DEST'], os.path.dirname(design.objname))
                 return send_from_directory(directory=uploads, filename=os.path.basename(design.objname),attachment_filename=design.name,as_attachment=True)
             except:
@@ -30,7 +33,5 @@ class Getfile(Resource):
             return {"message": gettext("getfile_file_notfound")}, 404
 
         return {"message": gettext("getfile_design_notfound")}, 404
-
-
 
 
