@@ -5,7 +5,7 @@ services:
     image: modelapp_image
     container_name: modelapp
     volumes:
-      - "./model_images:/home/appuser/app/static/images"
+      - "./model_images:/home/appuser/app/static/files"
       - "./local-db:/home/appuser/app/local-db"
       - "./tmpfiles:/home/appuser/app/tmpfiles"
     expose:
