@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <h1>All Results</h1>
+    </header>
+    <section>
+        <div class="list-group">
+            {% for result in results %}
+            <div class="list-group-item" >
+                
+                <dl>
+                    <dt>
+                        <a class="list-group-item-heading" style="font-size: 150%" aria-describedby="fileHelp" href="{{ url_for('webresults_all.download_file', result_id=result.id) }}">{{ result.name }}</a>
+                    </dt>
+                    <dd>
+                        <small id="fileHelp" class="form-text text-muted">SavedBy: {{ result.saved_by }}, Date/Time: {{ result.time_created |strftime }}, model-id: {{ result.model}} </small>
+                    </dd>
+                    <a class="btn btn-danger btn-sm mt-0" href="{{ url_for('webresults_all.delete_result', result_id=result.id) }}">
+                        Permanently Delete Result
+                    </a>
+                </dl>
+        </div>
+            {% endfor %}
+        </div>
+
+
+    </section>
+</div>
+{% endblock %}

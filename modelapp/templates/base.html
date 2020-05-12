@@ -21,6 +21,7 @@
                     <a class="nav-item nav-link" href="{{ url_for('webmodels.index') }}">Models</a>
                     {% if session['username']  and session['admin'] %}
                         <a class="nav-item nav-link" href="{{ url_for('webmodels_all.index') }}">All Models</a>
+                        <a class="nav-item nav-link" href="{{ url_for('webresults_all.index') }}">All Results</a>
                     {% endif %}
                     <a class="nav-item nav-link" href="{{ url_for('webuser.logut_user') }}">Sign Out</a>
                 {% else %}

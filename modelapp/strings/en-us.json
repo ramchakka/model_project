@@ -20,5 +20,7 @@
   "getfile_design_notfound": "Model not found.",
   "getfile_file_invalidkey": "Invalid encryption keysize",
   "getfile_item_notfound": "Item not found.",
-  "getfile_file_notfound": "File not found."
+  "getfile_file_notfound": "File not found.",
+  "saveresult_stored": "Result stored successfully.",
+  "saveresult_failed": "An error occurred while inserting the result."
 }

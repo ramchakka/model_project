@@ -18,10 +18,13 @@ from resources.user import UserRegister, UserLogin, User, TokenRefresh, UserLogo
 from views.web_user import webuser_blueprint
 from views.web_designs import webmodel_blueprint
 from views.web_designs_all import webmodel_all_blueprint
+from views.web_results import webresult_blueprint
+from views.web_results_all import webresult_all_blueprint
 
 from resources.design import Design, DesignList
 from resources.getfile import Getfile
 from resources.getencfile import GetEncodedFile
+from resources.saveresult import SaveResult
 from libs.image_helper import FILES_SET
 import datetime
 import calendar
@@ -41,9 +44,9 @@ configure_uploads(app, FILES_SET)
 app.secret_key = app.config["JWT_SECRET_KEY"]
 api = Api(app)
 jwt = JWTManager(app)
-db.init_app(app)
-ma.init_app(app)
-migrate = Migrate(app, db)
+#db.init_app(app)
+#ma.init_app(app)
+#migrate = Migrate(app, db)
 
 
 
@@ -88,11 +91,14 @@ def _jinja2_filter_datetime(date, fmt=None):
 app.register_blueprint(webuser_blueprint, url_prefix="/web/user")
 app.register_blueprint(webmodel_blueprint, url_prefix="/web/models")
 app.register_blueprint(webmodel_all_blueprint, url_prefix="/web/allmodels")
+app.register_blueprint(webresult_blueprint, url_prefix="/web/modelresults")
+app.register_blueprint(webresult_all_blueprint, url_prefix="/web/allresults")
 
 api.add_resource(Design, "/model/<string:name>")
 api.add_resource(DesignList, "/models")
 api.add_resource(Getfile, "/modelfile/<string:id>")
 api.add_resource(GetEncodedFile, "/encmodelfile/<string:id>")
+api.add_resource(SaveResult, "/result")
 
 api.add_resource(UserLogin, "/login")
 api.add_resource(TokenRefresh, "/refresh")

@@ -9,6 +9,7 @@ class UserModel(db.Model):
     password = db.Column(db.String(2048), nullable=False)
     email = db.Column(db.String(120), nullable=True,default=None)
     design = db.relationship("DesignModel",back_populates="user",lazy="dynamic")
+    result = db.relationship("ResultModel",back_populates="saved_user",lazy="dynamic")
 
     @classmethod
     def find_by_username(cls, username: str) -> "UserModel":

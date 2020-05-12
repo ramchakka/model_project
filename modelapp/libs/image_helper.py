@@ -5,7 +5,9 @@ from werkzeug.datastructures import FileStorage
 import traceback
 from flask_uploads import UploadSet, TEXT, DOCUMENTS, IMAGES, AUDIO, DATA, SCRIPTS, ARCHIVES, EXECUTABLES
 
-ALL_EXT = TEXT + DOCUMENTS + IMAGES + AUDIO + DATA + SCRIPTS + ARCHIVES  + EXECUTABLES
+# custom extensions
+CUSTOM_EXT = ('tflite',)
+ALL_EXT = CUSTOM_EXT + TEXT + DOCUMENTS + IMAGES + AUDIO + DATA + SCRIPTS + ARCHIVES  + EXECUTABLES
 FILES_SET = UploadSet("files", ALL_EXT)  # set name and allowed extensions
 
 
