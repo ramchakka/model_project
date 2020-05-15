@@ -1,6 +1,6 @@
 ---
     applications:
-    - name: my-app
+    - name: mg-app
       memory: 512MB
       disk_quota: 1GB
       random-route: true
