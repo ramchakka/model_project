@@ -10,6 +10,7 @@ import os
 import datetime
 import logging
 import traceback
+from sqlalchemy import exc
 
 logger = logging.getLogger()
 webmodel_blueprint = Blueprint('webmodels', __name__)
@@ -85,10 +86,14 @@ def edit_model(model_id):
 def delete_model(model_id):
     model = DesignModel.find_by_id(model_id)
     if model and model.username == session["username"]:
-        model.delete_from_db()
+        
         try:
+            model.delete_from_db()
             uploads = os.path.join( current_app.config['UPLOADED_FILES_DEST'])
             os.remove(os.path.join(uploads,model.objname))
+        except exc.IntegrityError as e:
+            traceback.print_exc()
+            flash('Unable to delete the model due to constraint on Results','danger')       
         except:
             traceback.print_exc()
             flash('File deletion failed','danger')

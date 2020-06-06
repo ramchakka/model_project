@@ -20,7 +20,7 @@
                 
                     <dl>
                         <dt>
-                            <a class="list-group-item-heading" style="font-size: 150%" aria-describedby="fileHelp" href="{{ url_for('webresults.download_file', result_id=result.id) }}">{{ result.name }}</a>
+                            <a class="list-group-item-heading" style="font-size: 150%" aria-describedby="fileHelp" href="{{ url_for('webresults.download_file', result_id=result.id) }}" target="_blank">{{ result.name }}</a>
                         </dt>
                         <dd>
                             <small id="fileHelp" class="form-text text-muted">SavedBy: {{ result.saved_by }}, Date/Time: {{ result.time_created |strftime }}</small>

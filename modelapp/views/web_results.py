@@ -32,15 +32,28 @@ def index(model_id):
 @webresult_blueprint.route("/download/<string:result_id>")
 @requires_login
 def download_file(result_id):
-
     result = ResultModel.find_by_id(result_id)
-
     model = DesignModel.find_by_id(result.model_id)
 
     if model and (model.username == session["username"] or  session["admin"] == True):
         try:
+            #Set custom mimetype and as_attmt values
+            custom_mimetypes = {
+                '.txt': 'text/plain',
+                '.json': 'text/plain',
+                '.csv': 'text/plain',
+            }
+            file_ext = os.path.basename(result.objname)[-4:]
+            mimetype = custom_mimetypes.get(file_ext, None)
+            #text files will open in new tab
+            as_attachment = False if mimetype in ['text/plain'] else True
+
             uploads = os.path.join( current_app.config['UPLOADED_FILES_DEST'], os.path.dirname(result.objname))
-            return send_from_directory(directory=uploads, filename=os.path.basename(result.objname),attachment_filename=result.name,as_attachment=True)
+            return send_from_directory(directory=uploads, 
+                                        filename=os.path.basename(result.objname),
+                                        attachment_filename=result.name,
+                                        mimetype=mimetype,
+                                        as_attachment=as_attachment)
         except:
             traceback.print_exc()
             return "File not found!"
