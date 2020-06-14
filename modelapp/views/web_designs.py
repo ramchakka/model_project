@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session, url_for, render_template, redirect,flash,current_app,send_from_directory
+from flask import Blueprint, request, session, url_for, render_template, redirect,flash,current_app,send_from_directory, jsonify
 #from resources.user import  User, UserModel
 #from schemas.user import UserSchema
 from schemas.design import DesignSchema
@@ -11,6 +11,9 @@ import datetime
 import logging
 import traceback
 from sqlalchemy import exc
+
+from datetime import  timezone
+import calendar
 
 logger = logging.getLogger()
 webmodel_blueprint = Blueprint('webmodels', __name__)
@@ -119,3 +122,59 @@ def download_file(model_id):
         flash('Unauthorized: Unable to download model id {}'.format(model_id), 'danger')
 
         return redirect(url_for(".index",model_id=model_id))
+
+@webmodel_blueprint.route("/display/<string:model_id>",methods=["GET", "POST"])
+@requires_login
+def display_file(model_id):
+    logger.info('model_id=' + model_id)
+    model = DesignModel.find_by_id(model_id)
+    if model and (model.username == session["username"] or  session["admin"] == True):
+        try:
+            suffix_list = ['.json', '.txt', '.csv'] 
+            suffix_match = model.objname.endswith(tuple(suffix_list))
+           
+            if suffix_match:
+                fname = os.path.join( current_app.config['UPLOADED_FILES_DEST'], model.objname)
+                
+                with open(fname, 'r') as file:
+                     data = file.read()
+                return jsonify({'text': data})
+            else:
+                return jsonify({'Error': 'Unknown file suffix.'})
+            
+        except:
+            traceback.print_exc()
+            jsonify({'Error': 'File Not found.'})
+    else:
+        flash('Unauthorized: Unable to download model id {}'.format(model_id), 'danger')
+
+        return  jsonify({'text': 'Error'})
+
+@webmodel_blueprint.route("/update/<string:model_id>",methods=["POST"])
+@requires_login
+def update_file(model_id):
+    logger.info('model_id=' + model_id)
+    logger.info('text=' + request.form['text'])
+
+    model = DesignModel.find_by_id(model_id)
+    utc_dt =  datetime.datetime.utcnow().replace(microsecond=0)
+    model.time_created =  utc_dt
+    try:
+        
+        fname = os.path.join( current_app.config['UPLOADED_FILES_DEST'], model.objname)
+        out_file = open(fname, "w")
+        out_file.writelines(request.form['text'])
+        out_file.close()
+
+        model.save_to_db()
+    
+    except:
+        traceback.print_exc()
+        flash('Error updating model', 'danger')
+        #return "Error renaming model"
+
+    #native = utc_dt.replace(tzinfo=None)
+    native = utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
+    format='%b %d, %Y %I:%M %p %Z'
+
+    return  jsonify({'status': 'Ok', 'time_updated':'Date/Time: '+native.strftime(format)})

@@ -27,6 +27,7 @@ from resources.getencfile import GetEncodedFile
 from resources.saveresult import SaveResult
 from libs.image_helper import FILES_SET
 import datetime
+from datetime import  timezone
 import calendar
 import os
 
@@ -80,10 +81,10 @@ def home():
 
 @app.template_filter('strftime')
 def _jinja2_filter_datetime(date, fmt=None):
+    date = date.split(".")[0] #ignore optional microsecond
     utc_dt = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M:%S')
     date = datetime.datetime.fromtimestamp(calendar.timegm(utc_dt.timetuple()))
-    
-    native = date.replace(tzinfo=None)
+    native = utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
     format='%b %d, %Y %I:%M %p %Z'
     return native.strftime(format) 
 

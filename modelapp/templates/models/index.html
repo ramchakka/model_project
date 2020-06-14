@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block content %}
 <div class="container">
     <header>
@@ -11,35 +12,51 @@
             <div class="form-group">
                 <div class="form-group">
                     <label for="file1">File</label>
-                    <input type="file" name="file1" id="file1" autocomplete="off" required >
+                    <input type="file" name="file1" id="file1" autocomplete="off" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
         <br></br>
-        <div class="list-group">
+        <div id="data-list" class="list-group">
             {% for model in models %}
-            <div class="list-group-item" >
-                
-                    <dl>
-                        <dt>
-                            <a class="list-group-item-heading" style="font-size: 150%" aria-describedby="fileHelp" href="{{ url_for('webmodels.download_file', model_id=model.id) }}">{{ model.name }}</a>
-                        </dt>
-                        <dd>
-                            <small id="fileHelp" class="form-text text-muted">Date/Time: {{ model.time_created |strftime }}</small>
-                        </dd>
-                        <a class="btn btn-secondary btn-sm mt-0" href="{{ url_for('webresults.index', model_id=model.id) }}">
-                            View Results
-                        </a>
-                        <a class="btn btn-danger btn-sm mt-0" href="{{ url_for('webmodels.delete_model', model_id=model.id) }}">
-                            Permanently Delete Model
-                        </a>
-                    </dl>
-                <!--
-                <a class="btn btn-secondary" href="{{ url_for('webmodels.edit_model', model_id=model.id) }}">
-                    Rename Model
-                </a>
-                -->
+            <div class="list-group-item">
+
+                <dl>
+                    <dt>
+                        <a class="list-group-item-heading" style="font-size: 150%" aria-describedby="fileHelp{{ model.id }}"
+                            href="{{ url_for('webmodels.download_file', model_id=model.id) }}">{{ model.name }}</a>
+                            {% if( model.name.endswith('.json') or model.name.endswith('.txt') or model.name.endswith('.csv') )%}
+                                <span id="fetch{{ model.id }}">
+                                <a href="javascript:display( '#display{{ model.id }}','#detail{{ model.id }}','{{ model.id }}');">
+                                    <button id="edit{{ model.id }}" type="button" style="font-size: 1em;"
+                                        class="btn btn-secondary btn-sm collapsed toggle fas fa-angle-double-down m-4" data-toggle="collapse"
+                                        data-target="#display{{ model.id }}">Expand</button> </a>
+
+                                <div id="display{{ model.id }}" class="collapse mt-2" cshow="off">
+                                    <span id="update{{ model.id }}">
+                                        <textarea id="detail{{  model.id }}" class="form-control z-depth-1" cols="50"
+                                            rows="3" wrap>ext here to edit</textarea>
+                                        <a href="javascript:update('#edit{{ model.id }}','#detail{{ model.id }}','#fileHelp{{ model.id }}','{{ model.id }}');">
+                                        <button class="btn btn-sm btn-secondary mt-1" type="button">Save</button> </a>
+                                    </span>
+                                </div>
+                            </span>
+                        {% endif %}
+                    </dt>
+                    <dd>
+                        <small id="fileHelp{{ model.id }}" class="form-text text-muted">Date/Time:
+                            {{ model.time_created |strftime }}</small>
+                    </dd>
+                    <a class="btn btn-secondary btn-sm mt-0"
+                        href="{{ url_for('webresults.index', model_id=model.id) }}">
+                        View Results
+                    </a>
+                    <a class="btn btn-danger btn-sm mt-0"
+                        href="{{ url_for('webmodels.delete_model', model_id=model.id) }}">
+                        Permanently Delete Model
+                    </a>
+                </dl>
 
             </div>
             {% endfor %}
