@@ -1,6 +1,8 @@
 from flask_restful import Resource
+from models.user import UserModel
 from models.design import DesignModel
 from schemas.design import DesignSchema
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 NAME_ALREADY_EXISTS = "A model with name '{}' already exists."
@@ -46,5 +48,9 @@ class Design(Resource):
 
 class DesignList(Resource):
     @classmethod
+    @jwt_required
     def get(cls):
-        return {"models": design_list_schema.dump(DesignModel.find_all())}, 200
+        #return {"models": design_list_schema.dump(DesignModel.find_all())}, 200
+        username = UserModel.find_by_id(get_jwt_identity()).username
+        return {"models": design_list_schema.dump(DesignModel.find_all_by_username(username))}, 200
+        

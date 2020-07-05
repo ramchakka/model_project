@@ -39,6 +39,10 @@ class DesignModel(db.Model):
     @classmethod
     def find_all(cls) -> List["DesignModel"]:
         return cls.query.all()
+    
+    @classmethod
+    def find_all_by_username(cls,uname: str) -> List["DesignModel"]:
+        return cls.query.filter_by(username=uname)
 
     def save_to_db(self) -> None:
         db.session.add(self)

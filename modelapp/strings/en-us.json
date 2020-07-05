@@ -17,7 +17,7 @@
   "user_registered": "Account created successfully, an email with an activation link has been sent to your email address, please check.",
 
   "web_items_alredyexists": "Item already exists with name. Try another name",
-  "getfile_design_notfound": "Model not found.",
+  "getfile_design_notfound": "Model either unauthorized or not found.",
   "getfile_file_invalidkey": "Invalid encryption keysize",
   "getfile_item_notfound": "Item not found.",
   "getfile_file_notfound": "File not found.",
