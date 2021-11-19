@@ -12,9 +12,10 @@ COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install uwsgi
 
 # Copy the rest of the codebase into the image
 COPY . /home/appuser/app
 
 # run the command to start uWSGI
-CMD [ "uwsgi", "--ini", "app.ini" ]
+CMD [ "/usr/local/bin/uwsgi", "--ini", "app.ini" ]
